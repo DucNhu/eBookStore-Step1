@@ -39,10 +39,11 @@ public class books {
                         "");
                 Statement statement = connection.createStatement();
         ) {
-            ResultSet resultSet = statement.executeQuery("select BookName from books group by Price DESC");
+            ResultSet resultSet = statement.executeQuery("select BookName, sum(status) as 'so luong da ban' from books inner join oderbook on books.BookName = oderbook.orderBookname group by BookName limit 100");
             System.out.println("Top 100 send books");
             while (resultSet.next()) {
                 String BookName = resultSet.getString("BookName");
+//                int stt = resultSet.getInt("oderbook.status");
                 System.out.println(BookName);
             }
         } catch (SQLException e) {
@@ -88,7 +89,7 @@ public class books {
         ) {
             System.out.println("Nhap tac gia ban muon tim:");
             String search = new Scanner(System.in).next();
-            ResultSet resultSet = statement.executeQuery("select BookName from books where Author =" + "'" + search + "'");
+            ResultSet resultSet = statement.executeQuery("select BookName from books where Author ='" + search + "'");
             System.out.println("Danh sach ban muon tim:");
             while (resultSet.next()) {
                 String BookName = resultSet.getString("BookName");
@@ -127,9 +128,9 @@ public class books {
 
     public static void main(String[] args) {
 //        top10Book();
-//        top100Book();
+        top100Book();
 //        searchCategory();
 //        searchAuthor();
-        searchID();
+//        searchID();
     }
 }
